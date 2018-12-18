@@ -1,0 +1,8 @@
+<md-card-title>{{data.title}}</md-card-title>
+<div style="text-align: justify;">{{data.message}}</div>
+<div>&nbsp;</div>
+<div>&nbsp;</div>
+<md-dialog-actions style="float:right;">
+    <button md-raised-button (click)="close(false)">{{data.cancelButton}}</button>
+    <button md-raised-button (click)="close(true)" color="primary">{{data.acceptButton}}</button>
+</md-dialog-actions>

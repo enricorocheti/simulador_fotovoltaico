@@ -1,0 +1,151 @@
+<md-card [tdToggle]="helpCard">
+  <md-card-title>Ajuda</md-card-title>
+  <div class="helpCard">
+    Os dados a serem inseridos nessa simulação estão disponíveis nos manuais dos equipamentos em questão (módulo ou inversor),
+    a energia média diária pode ser consultada no site <a class="link" target="_blank" href="http://globalsolaratlas.info">Global Solar Atlas</a>    e os preços de cada equipamento podem ser obtidos direto com o fornecedor do serviço ou em sites de revenda dos mesmos.<br><br>    O botão "Exemplo de simulação" serve para auxiliar novos usuários na simulação do seu projeto, ele gera valores exemplificados
+    para dimensionar um sistema fotovoltaico hipotético
+  </div>
+  <md-card-actions class="helpCardAction">
+    <button md-raised-button (click)="example()"><span>Exemplo de simulação</span></button>
+    <button md-raised-button (click)="toggleHelpCard()" color="primary">Entendi</button>
+    <!--<button md-raised-button (click)="getDailyEnergyOnline()">Teste Service</button>-->
+  </md-card-actions>
+</md-card>
+<md-card>
+  <md-card-title>
+    Dimensionamento de Sistema Fotovoltaico
+    <button md-icon-button (click)="toggleHelpCard()" class="buttonHelp"><md-icon class="md-24">help</md-icon></button>
+  </md-card-title>
+  <form #userForm="ngForm">
+    <div layout="row" layout-wrap>
+      <div class="column" flex="2"></div>
+      <div class="column" flex="95">
+        <div class="row">&nbsp;</div>
+        <div class="row title">
+          Dados do módulo fotovoltaico
+        </div>
+        <div class="row">
+          <md-input-container class="input100">
+            <input mdInput #moduleModelElement placeholder="Modelo" type="text" [(ngModel)]="moduleModel" maxlength="80" name="moduleModel">
+          </md-input-container>
+        </div>
+        <div class="row">
+          <md-input-container class="input100">
+            <input mdInput placeholder="Potência de pico" type="text" [(ngModel)]="modulePeakPower" maxlength="15" name="modulePeakPower"
+              required>
+            <md-hint align="end">Watt-pico</md-hint>
+          </md-input-container>
+        </div>
+        <div class="row">&nbsp;</div>
+
+        <div class="row title">
+          Dados do inversor
+        </div>
+        <div class="row">
+          <md-input-container class="input100">
+            <input mdInput placeholder="Modelo" type="text" [(ngModel)]="inverterModel" maxlength="80" name="inverterModel">
+          </md-input-container>
+        </div>
+        <div class="row">
+          <md-input-container class="input100">
+            <input mdInput placeholder="Potência nominal" type="text" [(ngModel)]="inverterRatedPower" maxlength="10" name="inverterRatedPower"
+              required>
+            <md-hint align="end">Watt</md-hint>
+          </md-input-container>
+        </div>
+        <div class="row">
+          <md-input-container class="input100">
+            <input mdInput placeholder="Eficiência" type="text" [(ngModel)]="inverterEfficiency" maxlength="10" name="inverterEfficiency"
+              mdTooltip="Caso não possua essa informação, o valor recomendado é de 98%" required>
+            <md-hint align="end">Porcentagem</md-hint>
+          </md-input-container>
+        </div>
+        <div class="row">&nbsp;</div>
+
+        <div class="row title">
+          Dados da localidade
+        </div>
+        <div class="row">
+          <md-input-container class="input50">
+            <input mdInput placeholder="Cidade" type="text" [(ngModel)]="locationCity" maxlength="50" name="locationCity">
+          </md-input-container>
+          <md-input-container class="input50">
+            <input mdInput placeholder="Estado" type="text" [(ngModel)]="locationState" maxlength="50" name="locationState">
+          </md-input-container>
+        </div>
+        <div class="row">
+          <md-input-container style="width:20%;">
+            <input mdInput placeholder="Latitude" type="text" [(ngModel)]="gps_y" maxlength="10" name="gps_x" required>
+          </md-input-container>
+          <md-input-container style="width:20%;">
+            <input mdInput placeholder="Longitude" type="text" [(ngModel)]="gps_x" maxlength="10" name="gps_y" required>
+          </md-input-container>
+          <button md-icon-button (click)="getDailyEnergyOnline()" style="width:7%;" title="Buscar energia diária online"><md-icon>refresh</md-icon></button>
+          <md-input-container style="width:48%;">
+            <input mdInput placeholder="Energia diária" type="text" [(ngModel)]="cityDailyEnergy" maxlength="10" name="cityDailyEnergy"
+              mdTooltip="Média anual" required>
+            <md-hint align="end">Watt-hora por metro quadrado por dia</md-hint>
+          </md-input-container>
+        </div>
+        <div class="row">&nbsp;</div>
+
+        <div class="row title">
+          Dimensionamento
+        </div>
+        <div class="row">
+          <md-input-container class="input100">
+            <input mdInput placeholder="Energia mensal desejada" type="text" [(ngModel)]="desiredMonthlyEnergy" maxlength="10" name="desiredMonthlyEnergy"
+              mdTooltip="Quanta energia você deseja produzir" required>
+            <md-hint align="end">Quilowatt-hora</md-hint>
+          </md-input-container>
+        </div>
+        <div class="row">
+          <md-input-container class="input100">
+            <input mdInput placeholder="Fator de dimensionamento dos inversores" type="text" [(ngModel)]="inverterSizingFactor" maxlength="10"
+              name="inverterSizingFactor" mdTooltip="Caso não possua essa informação, o valor recomendado é de 80%" required>
+            <md-hint align="end">Quilowatt-hora</md-hint>
+          </md-input-container>
+        </div>
+        <div class="row">&nbsp;</div>
+
+        <div class="row title">
+          Custo do projeto
+        </div>
+        <div class="row">
+          <md-input-container class="input100">
+            <input mdInput placeholder="Preço por módulo" type="text" [(ngModel)]="priceModule" maxlength="10" name="priceModule" required>
+            <md-hint align="end">Reais</md-hint>
+          </md-input-container>
+        </div>
+        <div class="row">
+          <md-input-container class="input100">
+            <input mdInput placeholder="Preço por inversor" type="text" [(ngModel)]="priceInverter" maxlength="10" name="priceInverter"
+              required>
+            <md-hint align="end">Reais</md-hint>
+          </md-input-container>
+        </div>
+        <div class="row">
+          <md-input-container class="input100">
+            <input mdInput placeholder="Estrutura de montagem (por módulo)" type="text" [(ngModel)]="priceStructure" maxlength="10" name="priceStructure"
+              required>
+            <md-hint align="end">Reais</md-hint>
+          </md-input-container>
+        </div>
+        <div class="row">
+          <md-input-container class="input100">
+            <input mdInput placeholder="Instalação (mão de obra e materiais)" type="text" [(ngModel)]="priceInstallation" maxlength="10"
+              name="priceInstallation" required>
+            <md-hint align="end">Reais</md-hint>
+          </md-input-container>
+        </div>
+        <div class="row">&nbsp;</div>
+      </div>
+    </div>
+  </form>
+  <md-divider></md-divider>
+  <md-card-actions align="end">
+    <button md-raised-button (click)="confirmClearData()">Limpar dados</button>
+    <button #simulateButton md-raised-button [disabled]="!userForm.form.valid" color="primary" (click)="simulate()">Simular sistema</button>
+    <!--<button md-button (click)="openDialog2()">Teste dialog</button>-->
+  </md-card-actions>
+</md-card>

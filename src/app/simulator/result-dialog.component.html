@@ -1,0 +1,60 @@
+<div class="md-headline">Relatório de Dimensionamento</div>
+<md-card-subtitle>{{data.city}} - {{data.state}}</md-card-subtitle>
+
+<div class="md-title">Módulo<span *ngIf="data.moduleModel"> modelo {{data.moduleModel}}</span></div>
+<div layout="row">
+    <div class="column" flex="30" class="div_padding">Número de módulos</div>
+    <div class="column" flex="30" class="div_padding">{{data.moduleQuantity}}</div>
+</div>
+<div layout="row">
+    <div class="column" flex="30" class="div_padding">Energia por módulo</div>
+    <div class="column" flex="30" class="div_padding">{{data.moduleEnergy.toFixed(2)}} kWh</div>
+</div>
+<div layout="row">
+    <div class="column" flex="30" class="div_padding">Potência de pico</div>
+    <div class="column" flex="30" class="div_padding">{{data.moduleTotalPeakPower.toFixed(2)}} Wp</div>
+</div>
+<div>&nbsp;</div>
+<md-divider></md-divider>
+<div>&nbsp;</div>
+
+<div class="md-title">Inversor<span *ngIf="data.moduleModel"> modelo {{data.inverterModel}}</span></div>
+<div layout="row">
+    <div class="column" flex="30" class="div_padding">Número de inversores</div>
+    <div class="column" flex="30" class="div_padding">{{data.inverterQuantity}}</div>
+</div>
+<div layout="row">
+    <div class="column" flex="30" class="div_padding">Potência necessária</div>
+    <div class="column" flex="30" class="div_padding">{{data.inverterTotalPower.toFixed(2)}} W</div>
+</div>
+<div>&nbsp;</div>
+<md-divider></md-divider>
+<div>&nbsp;</div>
+
+<div class="md-title">Cálculo financeiro</div>
+<div layout="row">
+    <div class="column" flex="30" class="div_padding">Gasto com módulos</div>
+    <div class="column" flex="20" class="div_padding">R$ {{data.priceModule.toFixed(2).replace('.',',')}}</div>
+</div>
+<div layout="row">
+    <div class="column" flex="30" class="div_padding">Gasto com inversores</div>
+    <div class="column" flex="20" class="div_padding">R$ {{data.priceInverter.toFixed(2).replace('.',',')}}</div>
+    <div class="column" flex="35" align="end" class="div_padding">Valor total do investimento &nbsp;&nbsp;</div>
+    <div class="column" flex="15" class="div_padding"><b>R$ {{data.totalPrice.toFixed(2).replace('.',',')}}</b></div>
+    
+</div>
+<div layout="row">
+    <div class="column" flex="30" class="div_padding">Gasto com estrutura</div>
+    <div class="column" flex="20" class="div_padding">R$ {{data.priceStructure.toFixed(2).replace('.',',')}}</div>
+    <div class="column" flex="35" align="end" class="div_padding">Custo por watt-pico &nbsp;&nbsp;</div>
+    <div class="column" flex="15" class="div_padding"><b>R$ {{data.wattPeakPrice.toFixed(2).replace('.',',')}}/Wp</b></div>
+</div>
+<div>&nbsp;</div>
+<md-divider></md-divider>
+<div>&nbsp;</div>
+
+<md-dialog-actions style="float:right;">
+    <button md-raised-button (click)="close(false)">Fechar</button>
+    <button md-raised-button (click)="exportCsv()">Exportar para CSV</button>
+    <button md-raised-button (click)="close(true)" color="primary">Nova simulação</button>
+</md-dialog-actions>

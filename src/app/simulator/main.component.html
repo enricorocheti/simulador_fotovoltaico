@@ -1,0 +1,20 @@
+<td-layout-nav>
+  <div td-toolbar-content layout="row" layout-align="center center" flex>
+    <span>Energia Solar Fotovoltaica</span>
+    <span flex></span>
+  </div>
+  <td-layout-manage-list #list>
+    <md-nav-list list-items td-sidenav-content>
+      <!--<a md-list-item title="Sensor" (click)="goTo('sensor')">
+        Sensor
+      </a>-->
+      <a md-list-item title="Simulador" (click)="goTo('simulator')">
+        <md-icon>poll</md-icon><span style="font-size:16px;">Simulador</span>
+      </a>
+      <a md-list-item title="Sobre" (click)="goTo('about')">
+          <md-icon>info</md-icon><span style="font-size:16px;">Sobre</span>
+      </a>
+    </md-nav-list>
+    <router-outlet></router-outlet> 
+  </td-layout-manage-list>
+</td-layout-nav>
